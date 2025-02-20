@@ -14,14 +14,14 @@ public class SlimeGauge : MonoBehaviour
         
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.CompareTag("Collectable Slime"))
-        {
-            transform.localScale += new Vector3(1, 1, 0);
-            Destroy(other.gameObject);
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if(other.gameObject.CompareTag("Collectable Slime"))
+    //     {
+    //         transform.localScale += new Vector3(1, 1, 0);
+    //         Destroy(other.gameObject);
+    //     }
+    // }
 }
 
 // public class SlimeGaugeEvent

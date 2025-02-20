@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 93482544375114146}
   - component: {fileID: 9080322233103856496}
   - component: {fileID: 2919788590830635667}
-  - component: {fileID: -6448022534081383859}
   - component: {fileID: -3730185704227398458}
   - component: {fileID: 3072250778424548945}
+  - component: {fileID: 2152783742693107282}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -213,18 +213,8 @@ MonoBehaviour:
   throwingPower: 30
   scaleChangeAmount: 1
   chargeInterval: 0.25
---- !u!114 &-6448022534081383859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7353866935303176438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36504b7ce1ea2470ea10523bcd143b5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  aimAssistOn: 1
+  aimAssistThreshold: 15
 --- !u!114 &-3730185704227398458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,3 +241,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingPosition: {x: 0, y: 0}
+--- !u!114 &2152783742693107282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7353866935303176438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36504b7ce1ea2470ea10523bcd143b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

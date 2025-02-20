@@ -27,10 +27,8 @@ public class Door : MonoBehaviour
     {
         foreach(GameObject pressurePlate in pressurePlates)
         {
-            // Debug.Log(e.pressurePlateStates[pressurePlate]);
-            if(!e.pressurePlateStates.ContainsKey(pressurePlate) || e.pressurePlateStates[pressurePlate] == false)
+            if(!PressurePlateEvent.pressurePlateStates.ContainsKey(pressurePlate) || PressurePlateEvent.pressurePlateStates[pressurePlate] == false)
             {
-                Debug.Log("false");
                 if(!isToggle)
                 {
                     openDoor = false;
@@ -38,7 +36,6 @@ public class Door : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("true");
         openDoor = true;
     }
 

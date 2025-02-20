@@ -1,31 +1,32 @@
+using System.Drawing;
 using UnityEngine;
 
 public class SlimeGauge : MonoBehaviour
 {
+    [SerializeField] const float MAXPLAYERSIZE = 4;
+    Subscription<CollectSlimeEvent> collectSlimeEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        collectSlimeEvent = EventBus.Subscribe<CollectSlimeEvent>(_IncreasePlayerSize);
     }
 
-    // Update is called once per frame
-    void Update()
+    void ChangePlayerSize(float size)
     {
-        
+        transform.localScale = new Vector3(size, size, 0);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void _IncreasePlayerSize(CollectSlimeEvent e)
     {
-        if(other.gameObject.CompareTag("Collectable Slime"))
+        if(e.obj == gameObject)
         {
-            transform.localScale += new Vector3(1, 1, 0);
-            Destroy(other.gameObject);
+            float newSize = Mathf.Min(MAXPLAYERSIZE, transform.localScale.x + e.amount);
+            ChangePlayerSize(newSize);
         }
     }
-}
 
-// public class SlimeGaugeEvent
-// {
-//     public float currentGuage = 0;
-//     public SlimeGaugeEvent(float _currentGuage) {currentGuage = _currentGuage;}
-// }
+    void OnDestroy()
+    {
+        EventBus.Unsubscribe<CollectSlimeEvent>(collectSlimeEvent);
+    }
+}

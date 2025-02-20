@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
-    [SerializeField] const float MAXPLAYERSIZE = 3;
+    [SerializeField] const float MAXPLAYERSIZE = 4;
     [SerializeField] const float MINPLAYERSIZE = 1;
     [SerializeField] GameObject throwableSlime;
     [SerializeField] float throwingPower = 10;
@@ -36,7 +36,6 @@ public class Throw : MonoBehaviour
         Vector3 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cursorPos.z = 0; // Keep on the same Z plane
 
-        Debug.Log(AimAssistSnap().normalized);
         // spawn throwable slime
         // if(Input.GetMouseButtonDown(0) && !slimeInstance && transform.localScale.x > MINPLAYERSIZE)
         // {
@@ -70,7 +69,7 @@ public class Throw : MonoBehaviour
                 throwableSlimePosY = transform.localScale.y / 2;
                 slimeInstance = Instantiate(throwableSlime, spawnPos, quaternion.identity);
             }
-            
+
             if(slimeInstance)
             {
                 slimeInstance.transform.position = new Vector2(transform.position.x, transform.position.y + throwableSlimePosY);
