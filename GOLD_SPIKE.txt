@@ -1,0 +1,1 @@
+My single gold spike mechanic is the ability to shoot out a slime projectile in the direction of the mouse. This projectile can serve as a weight for pressure plates and serve as a movement method during gameplay.
