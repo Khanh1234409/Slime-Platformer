@@ -5,14 +5,20 @@ using UnityEngine.InputSystem.Interactions;
 
 public class PressurePlate : MonoBehaviour
 {
+    int numOnPressurePlate = 0;
     void OnTriggerEnter2D(Collider2D other)
     {
+        numOnPressurePlate++;
         EventBus.Publish<PressurePlateEvent>(new PressurePlateEvent(gameObject, true));
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        EventBus.Publish<PressurePlateEvent>(new PressurePlateEvent(gameObject, false));
+        numOnPressurePlate--;
+        if(numOnPressurePlate == 0)
+        {
+            EventBus.Publish<PressurePlateEvent>(new PressurePlateEvent(gameObject, false));
+        }
     }
 }
 

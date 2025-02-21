@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 // using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,8 +25,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float playerWallJumpSpeedY;
     [SerializeField] float jumpDurationTime = 0.5f;
     [SerializeField] float groundDistance = 0.2f;
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] LayerMask wallJumpLayer;
+    [SerializeField] List<LayerMask> groundLayers;
+    [SerializeField] List<LayerMask> wallJumpLayers;
 
     [SerializeField] float wallJumpDisableMovementTime = 0.2f;
     float nextMovementTime;
@@ -157,21 +161,22 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector2 raycastSize = new Vector2(transform.localScale.x - 0.2f, 0.1f);
         Vector2 raycastPos = new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2);
-        RaycastHit2D hit = Physics2D.BoxCast(raycastPos, raycastSize, 0f, Vector2.down, groundDistance, groundLayer);
-
-        // Draw the box for visualization
-        Debug.DrawLine(raycastPos, raycastPos + Vector2.left * raycastSize.x, Color.red);  // Left side
-        Debug.DrawLine(raycastPos, raycastPos + Vector2.right * raycastSize.x, Color.red); // Right side
-        Debug.DrawLine(raycastPos, raycastPos + Vector2.up * raycastSize.y, Color.red);    // Top side
-        Debug.DrawLine(raycastPos + Vector2.down * raycastSize.y, raycastPos + Vector2.left * raycastSize.x + Vector2.down * raycastSize.y, Color.red); // Bottom side
+        RaycastHit2D hit = default;
+        foreach(LayerMask mask in groundLayers)
+        {
+            hit = Physics2D.BoxCast(raycastPos, raycastSize, 0f, Vector2.down, groundDistance, mask);
+            if(hit.collider)
+            {
+                break;
+            }
+        }
 
         if (hit.collider != null) {
-            int hitLayer = hit.collider.gameObject.layer;
-            Debug.Log("layer = " + LayerMask.LayerToName(hitLayer));
             EventBus.Publish<IsGroundedEvent>(new IsGroundedEvent(true));
             lastJump = LastJump.Ground;
             return true;
         }
+        
         EventBus.Publish<IsGroundedEvent>(new IsGroundedEvent(false));
         return false;
     }
@@ -188,10 +193,17 @@ public class PlayerMovement : MonoBehaviour
             raycastPos = new Vector2(transform.position.x - transform.localScale.x / 2, transform.position.y);
         }
 
-        RaycastHit2D hit = Physics2D.BoxCast(raycastPos, raycastSize, 0f, Vector2.left, groundDistance, wallJumpLayer);
+        RaycastHit2D hit = default;
+        foreach(LayerMask mask in wallJumpLayers)
+        {
+            hit = Physics2D.BoxCast(raycastPos, raycastSize, 0f, Vector2.down, groundDistance, mask);
+            if(hit.collider)
+            {
+                break;
+            }
+        }
 
         if (hit.collider != null) {
-            int hitLayer = hit.collider.gameObject.layer;
             if(isRightWall)
             {
                 EventBus.Publish<IsWalledEvent>(new IsWalledEvent(false, true));
@@ -206,6 +218,18 @@ public class PlayerMovement : MonoBehaviour
             return true;
         }
         EventBus.Publish<IsWalledEvent>(new IsWalledEvent(false, false));
+        return false;
+    }
+
+    bool CompareLayers(int layer, List<LayerMask> masks)
+    {
+        foreach(LayerMask mask in masks)
+        {
+            if((mask.value & (1 << layer)) != 0)
+            {
+                return true;
+            }
+        }
         return false;
     }
 

@@ -148,3 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slimeAmount: 3
+  tagsThatCanCollect:
+  - Player
+  - Throwable Slime

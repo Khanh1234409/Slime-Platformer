@@ -133,11 +133,11 @@ public class Throw : MonoBehaviour
 
 public class ThrowEvent
 {
-    public GameObject thrown;
+    public GameObject obj;
     public Vector2 velocity;
-    public ThrowEvent(GameObject _thrown, Vector2 _velocity)
+    public ThrowEvent(GameObject _obj, Vector2 _velocity)
     {
-        thrown = _thrown;
+        obj = _obj;
         velocity = _velocity;
     }
 }

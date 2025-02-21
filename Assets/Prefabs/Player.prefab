@@ -190,12 +190,16 @@ MonoBehaviour:
   playerWallJumpSpeedY: 20
   jumpDurationTime: 0.05
   groundDistance: 0
-  groundLayer:
-    serializedVersion: 2
+  groundLayers:
+  - serializedVersion: 2
     m_Bits: 64
-  wallJumpLayer:
-    serializedVersion: 2
+  - serializedVersion: 2
+    m_Bits: 512
+  wallJumpLayers:
+  - serializedVersion: 2
     m_Bits: 1024
+  - serializedVersion: 2
+    m_Bits: 512
   wallJumpDisableMovementTime: 0.15
 --- !u!114 &2919788590830635667
 MonoBehaviour:

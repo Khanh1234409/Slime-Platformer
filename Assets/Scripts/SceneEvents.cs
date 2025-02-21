@@ -17,5 +17,16 @@ public class SceneEvents : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            // Get the current scene name
+            string currentScene = SceneManager.GetActiveScene().name;
+
+            // Determine the next scene
+            string nextScene = (currentScene == "Level 0") ? "Level 1" : "Level 0";
+
+            // Load the next scene
+            SceneManager.LoadScene(nextScene);
+        }
     }
 }

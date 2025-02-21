@@ -20,21 +20,16 @@ public class Checkpoint : MonoBehaviour
 
     void _ShowFlag(CheckpointEvent e)
     {
-        // SpriteRenderer flagSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        // SpriteRenderer flagSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         if(e.checkpoint == gameObject)
         {
             // red
             Debug.Log("Changing color");
             flagSprite.color = new Color(255f / 255f, 73f / 255f, 73f / 255f);
-            // flagSprite.color = Color.red;
-            flagSprite.enabled = true;
         }
         else
         {
             // white
-            // flagSprite.color = Color.white;
-            flagSprite.enabled = false;
+            flagSprite.color = Color.white;
         }
     }
 

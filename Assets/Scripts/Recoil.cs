@@ -30,17 +30,9 @@ public class Recoil : MonoBehaviour
     void _Recoil(ThrowEvent e)
     {
         EventBus.Publish<MovementEvent>(new MovementEvent(false));
-        // if(rb.linearVelocity.magnitude > (rb.linearVelocity - e.velocity).magnitude)
-        // {
-        //     rb.linearVelocity += -e.velocity;
-        // }
-        // else
-        // {
-        //     rb.linearVelocity = -e.velocity;
-        // }
-        float extraSpeed = e.thrown.transform.localScale.x > 1 ? 1 + e.thrown.transform.localScale.x * .25f : 1;
+        float extraSpeed = e.obj.transform.localScale.x > 1 ? 1 + e.obj.transform.localScale.x * .25f : 1;
         rb.linearVelocity = -e.velocity * extraSpeed;
-        Debug.Log(-e.velocity * (e.thrown.transform.localScale.x));
+        Debug.Log(-e.velocity * (e.obj.transform.localScale.x));
 
         recoilEndTime = Time.time + recoilTime;
         inRecoil = true;
