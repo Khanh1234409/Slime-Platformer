@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float groundDistance = 0.2f;
     [SerializeField] List<LayerMask> groundLayers;
     [SerializeField] List<LayerMask> wallJumpLayers;
+    int numJumps = 1;
+    [SerializeField] float coyoteTime = 0.1f;
+    [SerializeField] float coyoteStart = 0;
 
     [SerializeField] float wallJumpDisableMovementTime = 0.2f;
     float nextMovementTime;
@@ -57,6 +60,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool isGrounded = IsGrounded();
+        bool isCoyote = false;
+        if(isGrounded)
+        {
+            coyoteStart = Time.time;
+        }
+        if(coyoteStart + coyoteTime > Time.time)
+        {
+            isCoyote = true;
+        }
+
         if(movementEnabled && Time.time > nextMovementTime)
         {
             // rb.linearVelocityY = rb.linearVelocityY - gravityAcceleration * Time.deltaTime;
@@ -112,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         // jump
-        if(Input.GetKeyDown(KeyCode.Space) && (IsGrounded() || IsWalled(true) || IsWalled(false)))
+        if(Input.GetKeyDown(KeyCode.Space) && (isGrounded || isCoyote || IsWalled(true) || IsWalled(false)))
         {
             jumpEndTime = Time.time + jumpDurationTime;
         }

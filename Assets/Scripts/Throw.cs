@@ -46,13 +46,14 @@ public class Throw : MonoBehaviour
         //     Debug.Log("Throwing " + throwableSlime);
         // }
         // throw slime at where the cursor is
+        Vector2 direction = (cursorPos - transform.position).normalized;
+        if(aimAssistOn)
+        {
+            direction = AimAssistSnap().normalized;
+        }
+        
         if(Input.GetMouseButtonUp(0) && slimeInstance)
         {
-            Vector2 direction = (cursorPos - transform.position).normalized;
-            if(aimAssistOn)
-            {
-                direction = AimAssistSnap().normalized;
-            }
             slimeInstance.GetComponent<Rigidbody2D>().linearVelocity = direction * throwingPower;
             Vector2 velocity = slimeInstance.GetComponent<Rigidbody2D>().linearVelocity;
             EventBus.Publish<ThrowEvent>(new ThrowEvent(slimeInstance, velocity));
@@ -62,6 +63,7 @@ public class Throw : MonoBehaviour
         // charge slime throw
         if(Input.GetMouseButton(0))
         {
+            EventBus.Publish<MouseDirectionEvent>(new MouseDirectionEvent(direction));
             if(!slimeInstance && transform.localScale.x > MINPLAYERSIZE)
             {
                 nextChargeTime = Time.time;
@@ -139,5 +141,14 @@ public class ThrowEvent
     {
         obj = _obj;
         velocity = _velocity;
+    }
+}
+
+public class MouseDirectionEvent
+{
+    public Vector2 direction;
+    public MouseDirectionEvent(Vector2 _direction)
+    {
+        direction = _direction;
     }
 }
