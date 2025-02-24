@@ -19,7 +19,8 @@ public class ChangeHealthOnTouch : MonoBehaviour
     {
         if(other.gameObject == GameObject.Find("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            EventBus.Publish<RespawnEvent>(new RespawnEvent());
         }
     }
 }

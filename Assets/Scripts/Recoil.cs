@@ -32,7 +32,6 @@ public class Recoil : MonoBehaviour
         EventBus.Publish<MovementEvent>(new MovementEvent(false));
         float extraSpeed = e.obj.transform.localScale.x > 1 ? 1 + e.obj.transform.localScale.x * .25f : 1;
         rb.linearVelocity = -e.velocity * extraSpeed;
-        Debug.Log(-e.velocity * (e.obj.transform.localScale.x));
 
         recoilEndTime = Time.time + recoilTime;
         inRecoil = true;

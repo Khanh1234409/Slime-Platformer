@@ -29,7 +29,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] List<LayerMask> wallJumpLayers;
     int numJumps = 1;
     [SerializeField] float coyoteTime = 0.1f;
-    [SerializeField] float coyoteStart = 0;
+    float coyoteStart = 0;
+
+    [SerializeField] float jumpBufferTime = 0.2f;
+    float jumpBufferStart = 0;
 
     [SerializeField] float wallJumpDisableMovementTime = 0.2f;
     float nextMovementTime;
@@ -132,8 +135,10 @@ public class PlayerMovement : MonoBehaviour
                 // rb.linearVelocityX = 0;
             }
         }
+
         // jump
-        if(Input.GetKeyDown(KeyCode.Space) && (isGrounded || isCoyote || IsWalled(true) || IsWalled(false)))
+        BufferJump();
+        if((Input.GetKeyDown(KeyCode.Space) || Time.time < jumpBufferStart + jumpBufferTime) && (isGrounded || isCoyote || IsWalled(true) || IsWalled(false)))
         {
             jumpEndTime = Time.time + jumpDurationTime;
         }
@@ -175,7 +180,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    bool IsGrounded() {
+    void BufferJump()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) && !IsGrounded())
+        {
+            jumpBufferStart = Time.time;
+        }
+    }
+
+    bool IsGrounded()
+    {
         if(IsWalled(true) || IsWalled(false))
         {
             return false;
@@ -202,7 +216,8 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    bool IsWalled(bool isRightWall) {
+    bool IsWalled(bool isRightWall)
+    {
         Vector2 raycastSize = new Vector2(0.1f, transform.localScale.y - 0.02f);
         Vector2 raycastPos;
         if(isRightWall)
@@ -224,7 +239,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (hit.collider != null) {
+        if (hit.collider != null)
+        {
             if(isRightWall)
             {
                 EventBus.Publish<IsWalledEvent>(new IsWalledEvent(false, true));

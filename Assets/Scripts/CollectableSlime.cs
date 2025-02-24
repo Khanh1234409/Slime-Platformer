@@ -22,7 +22,6 @@ public class CollectableSlime : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(nextRespawnTime);
         if(Time.time > nextRespawnTime)
         {
             Color color = spriteRenderer.color;

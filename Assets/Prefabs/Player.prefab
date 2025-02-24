@@ -291,6 +291,8 @@ MonoBehaviour:
     m_Bits: 512
   coyoteTime: 0.1
   coyoteStart: 0
+  jumpBufferTime: 0.1
+  jumpBufferStart: 0
   wallJumpDisableMovementTime: 0.15
 --- !u!114 &2919788590830635667
 MonoBehaviour:

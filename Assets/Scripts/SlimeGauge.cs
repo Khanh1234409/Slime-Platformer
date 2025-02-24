@@ -6,10 +6,12 @@ public class SlimeGauge : MonoBehaviour
     [SerializeField] const float MINPLAYERSIZE = 1;
     [SerializeField] const float MAXPLAYERSIZE = 4;
     Subscription<CollectSlimeEvent> collectSlimeEvent;
+    Subscription<RespawnEvent> respawnEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         collectSlimeEvent = EventBus.Subscribe<CollectSlimeEvent>(_IncreasePlayerSize);
+        respawnEvent = EventBus.Subscribe<RespawnEvent>(_ResetGuage);
     }
 
     void ChangePlayerSize(float size)
@@ -26,8 +28,14 @@ public class SlimeGauge : MonoBehaviour
         }
     }
 
+    void _ResetGuage(RespawnEvent e)
+    {
+        ChangePlayerSize(MINPLAYERSIZE);
+    }
+
     void OnDestroy()
     {
         EventBus.Unsubscribe<CollectSlimeEvent>(collectSlimeEvent);
+        EventBus.Unsubscribe<RespawnEvent>(respawnEvent);
     }
 }

@@ -2,7 +2,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Vector2 startingPosition;
+    public static Player Instance;
+    Vector2 startingPosition;
+    
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
