@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SlimeGauge : MonoBehaviour
 {
+    [SerializeField] const float MINPLAYERSIZE = 1;
     [SerializeField] const float MAXPLAYERSIZE = 4;
     Subscription<CollectSlimeEvent> collectSlimeEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,7 +21,7 @@ public class SlimeGauge : MonoBehaviour
     {
         if(e.obj == gameObject)
         {
-            float newSize = Mathf.Min(MAXPLAYERSIZE, transform.localScale.x + e.amount);
+            float newSize = Mathf.Min(MAXPLAYERSIZE, transform.localScale.x + e.amount, MINPLAYERSIZE + e.amount);
             ChangePlayerSize(newSize);
         }
     }

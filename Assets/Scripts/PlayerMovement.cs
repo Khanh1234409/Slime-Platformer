@@ -62,6 +62,13 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isGrounded = IsGrounded();
         bool isCoyote = false;
+        foreach (Transform eye in transform)
+        {
+            Vector3 eyePosition = eye.localPosition;
+            eyePosition.x = playerDirectionRight ? Mathf.Abs(eyePosition.x) : Mathf.Abs(eyePosition.x) * -1;
+            eye.localPosition = eyePosition;
+        }
+
         if(isGrounded)
         {
             coyoteStart = Time.time;
