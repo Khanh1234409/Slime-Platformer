@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        EventBus.Publish<PlayerInitialPositionEvent>(new PlayerInitialPositionEvent(transform.position));
         if (GameManager.Instance.GetCheckpointPosition() != Vector2.zero)
         {
             transform.position = GameManager.Instance.GetCheckpointPosition();
@@ -29,5 +30,14 @@ public class Player : MonoBehaviour
         {
             startingPosition = transform.position;
         }
+    }
+}
+
+public class PlayerInitialPositionEvent
+{
+    public Vector3 position;
+    public PlayerInitialPositionEvent(Vector3 _position)
+    {
+        position = _position;
     }
 }

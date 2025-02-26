@@ -7,10 +7,12 @@ public class TimeLayerChange : MonoBehaviour
     [SerializeField] float minSize = 2;
     // float nextLayerChangeTime;
     Subscription<ThrowEvent> throwEvent;
+    Subscription<CollectSlimeEvent> collectSlimeEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         throwEvent = EventBus.Subscribe<ThrowEvent>(_ChangeSlimeLayer);
+        collectSlimeEvent = EventBus.Subscribe<CollectSlimeEvent>(_ChangeSlimeLayer);
         // nextLayerChangeTime = Time.time;
     }
 
@@ -18,7 +20,15 @@ public class TimeLayerChange : MonoBehaviour
     {
         if(e.obj == gameObject && transform.localScale.x >= minSize)
         {
-            // SetLayerChangeTime();
+            Invoke(nameof(ChangeLayer), timeToChangeLayer);
+        }
+    }
+
+    void _ChangeSlimeLayer(CollectSlimeEvent e)
+    {
+        if((e.obj == gameObject && transform.localScale.x >= minSize) || (e.obj == gameObject && e.amount >= minSize - 1))
+        {
+
             Invoke(nameof(ChangeLayer), timeToChangeLayer);
         }
     }

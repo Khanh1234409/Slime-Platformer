@@ -27,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float groundDistance = 0.2f;
     [SerializeField] List<LayerMask> groundLayers;
     [SerializeField] List<LayerMask> wallJumpLayers;
-    int numJumps = 1;
     [SerializeField] float coyoteTime = 0.1f;
     float coyoteStart = 0;
 
@@ -175,7 +174,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                rb.linearVelocityY -= gravityAcceleration * Time.deltaTime;
+                float velocityY = Mathf.Max(rb.linearVelocityY - gravityAcceleration * Time.deltaTime, -maxSpeedY);
+                rb.linearVelocityY = velocityY;
             }
         }
     }

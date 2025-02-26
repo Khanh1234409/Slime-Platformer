@@ -18,7 +18,6 @@ public class Throw : MonoBehaviour
     float throwableSlimePosY;
     bool isGrounded = false;
     Subscription<IsGroundedEvent> isGroundedEvent;
-    [SerializeField] float aimAssistThreshold = 22.5f; // Degrees within which the aim assist will snap
     private float[] presetAngles = { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f };
 
 

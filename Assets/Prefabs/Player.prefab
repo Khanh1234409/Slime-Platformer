@@ -290,9 +290,7 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 512
   coyoteTime: 0.1
-  coyoteStart: 0
   jumpBufferTime: 0.1
-  jumpBufferStart: 0
   wallJumpDisableMovementTime: 0.15
 --- !u!114 &2919788590830635667
 MonoBehaviour:
@@ -310,8 +308,7 @@ MonoBehaviour:
   throwingPower: 30
   scaleChangeAmount: 1
   chargeInterval: 0.25
-  aimAssistOn: 1
-  aimAssistThreshold: 15
+  aimAssistOn: 0
 --- !u!114 &-3730185704227398458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,7 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a08f078dd2a64c3180117ba69a64ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingPosition: {x: 0, y: 0}
 --- !u!114 &2152783742693107282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36504b7ce1ea2470ea10523bcd143b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSize: 1
+  maxSize: 4
 --- !u!1 &8138647153683410592
 GameObject:
   m_ObjectHideFlags: 0

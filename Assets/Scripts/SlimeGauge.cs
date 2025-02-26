@@ -3,34 +3,34 @@ using UnityEngine;
 
 public class SlimeGauge : MonoBehaviour
 {
-    [SerializeField] const float MINPLAYERSIZE = 1;
-    [SerializeField] const float MAXPLAYERSIZE = 4;
+    [SerializeField] float minSize = 1;
+    [SerializeField] float maxSize = 4;
     Subscription<CollectSlimeEvent> collectSlimeEvent;
     Subscription<RespawnEvent> respawnEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        collectSlimeEvent = EventBus.Subscribe<CollectSlimeEvent>(_IncreasePlayerSize);
+        collectSlimeEvent = EventBus.Subscribe<CollectSlimeEvent>(_IncreaseSize);
         respawnEvent = EventBus.Subscribe<RespawnEvent>(_ResetGuage);
     }
 
-    void ChangePlayerSize(float size)
+    void ChangeSize(float size)
     {
         transform.localScale = new Vector3(size, size, 0);
     }
 
-    void _IncreasePlayerSize(CollectSlimeEvent e)
+    void _IncreaseSize(CollectSlimeEvent e)
     {
         if(e.obj == gameObject)
         {
-            float newSize = Mathf.Min(MAXPLAYERSIZE, transform.localScale.x + e.amount, MINPLAYERSIZE + e.amount);
-            ChangePlayerSize(newSize);
+            float newSize = Mathf.Min(maxSize, transform.localScale.x + e.amount, minSize + e.amount);
+            ChangeSize(newSize);
         }
     }
 
     void _ResetGuage(RespawnEvent e)
     {
-        ChangePlayerSize(MINPLAYERSIZE);
+        ChangeSize(minSize);
     }
 
     void OnDestroy()

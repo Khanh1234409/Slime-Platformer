@@ -44,7 +44,6 @@ public class CollectableSlime : MonoBehaviour
                 spriteRenderer.color = color;
                 GetComponent<BoxCollider2D>().enabled = false;
                 nextRespawnTime = Time.time + respawnTime;
-                Debug.Log(nextRespawnTime);
                 return;
             }
         }
