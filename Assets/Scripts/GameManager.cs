@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
     // [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject completionScreen;
     Vector3 playerPausePosition;
-    bool menuIsActive = false;
+    public bool menuIsActive = false;
 
     Subscription<CheckpointEvent> checkpointEvent;
     Subscription<GoalEvent> goalEvent;
@@ -82,13 +83,17 @@ public class GameManager : MonoBehaviour
 
     void _SetPlayerInitialPosition(PlayerInitialPositionEvent e)
     {
+        Debug.Log("Player position = " + e.position);
         playerInitialPosition = e.position;
+        lastCheckpointPosition = playerInitialPosition;
+        hasCheckpoint = false;
     }
 
     void _ResetPlayerCheckpoint(GoalEvent e)
     {
-        lastCheckpointPosition = playerInitialPosition;
-        hasCheckpoint = false;
+        // lastCheckpointPosition = playerInitialPosition;
+        // hasCheckpoint = false;
+        StartCoroutine(delayOpenPauseMenu());
     }
 
     void _ResetPlayerCheckpoint(ResetCheckpointEvent e)
@@ -128,6 +133,12 @@ public class GameManager : MonoBehaviour
     public Vector2 GetCheckpointPosition()
     {
         return hasCheckpoint ? lastCheckpointPosition : playerInitialPosition;
+    }
+
+    IEnumerator delayOpenPauseMenu()
+    {
+        yield return new WaitForSeconds(1f);
+        EventBus.Publish<TogglePauseMenuEvent>(new TogglePauseMenuEvent());
     }
 
     void OnDestroy()
